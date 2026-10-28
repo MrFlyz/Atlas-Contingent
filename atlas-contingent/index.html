@@ -1,0 +1,328 @@
+!DOCTYPE html
+html lang=ru
+head
+meta charset=UTF-8
+titleAtlas Contingenttitle
+meta name=viewport content=width=device-width, initial-scale=1.0
+style
+  root {
+    --bg#0a0a0a; --panel#141414; --accent#800020;
+    --accent-hover#a30029; --text#e0e0e0; --muted#888;
+  }
+   { box-sizingborder-box; margin0; padding0; }
+  body { backgroundvar(--bg); colorvar(--text); font-family'Segoe UI',sans-serif; line-height1.6; }
+  header { backgroundvar(--panel); border-bottom2px solid var(--accent);
+    padding1rem 2rem; displayflex; justify-contentspace-between; align-itemscenter;
+    positionsticky; top0; z-index100; flex-wrapwrap; gap10px; }
+  .logo { displayflex; align-itemscenter; gap12px; font-weightbold;
+    letter-spacing2px; text-transformuppercase; }
+  .logo img { width45px; height45px; border-radius50%; border2px solid var(--accent); }
+  nav { displayflex; gap18px; flex-wrapwrap; }
+  nav a { colorvar(--text); text-decorationnone; font-weight600; cursorpointer; }
+  nav ahover, nav a.active { colorvar(--accent); }
+  main { padding3rem 2rem; max-width1000px; margin0 auto; min-height70vh; }
+  section { displaynone; animationfade .4s; }
+  section.active { displayblock; }
+  @keyframes fade { from{opacity0;transformtranslateY(8px);} to{opacity1;transformtranslateY(0);} }
+  h1,h2 { border-bottom2px solid var(--accent); padding-bottom8px;
+    margin-bottom20px; text-transformuppercase; letter-spacing1px; }
+  p { margin-bottom14px; }
+  .btn { displayinline-block; backgroundvar(--accent); color#fff; padding10px 20px;
+    bordernone; border-radius4px; cursorpointer; font-weightbold;
+    text-transformuppercase; font-size.9rem; transition.3s; }
+  .btnhover { backgroundvar(--accent-hover); }
+  .btn.alt { background#333; } .btn.althover { background#555; }
+  .box { backgroundvar(--panel); padding2rem; border1px solid #333;
+    border-radius8px; max-width420px; margin0 auto; }
+  input { width100%; padding10px; margin8px 0 16px;
+    background#000; border1px solid #333; color#fff; border-radius4px; }
+  inputfocus { outlinenone; border-colorvar(--accent); }
+  label { font-size.85rem; colorvar(--muted); text-transformuppercase; }
+  .msg { padding10px; border-radius4px; margin-bottom15px; font-size.9rem; displaynone; }
+  .msg.err { background#3a0d0d; color#ff8080; border1px solid #800; displayblock; }
+  .msg.ok  { background#0d3a1a; color#80ff9a; border1px solid #080; displayblock; }
+  table { width100%; border-collapsecollapse; margin-top15px; }
+  th,td { padding10px; text-alignleft; border-bottom1px solid #333; }
+  th { backgroundvar(--panel); colorvar(--accent); text-transformuppercase; font-size.85rem; }
+  select { padding6px; background#000; color#fff; border1px solid #333; border-radius4px; }
+  .doc-link { colorvar(--accent); font-weightbold; }
+  .hidden { displaynone !important; }
+style
+head
+body
+
+header
+  div class=logo
+    img src=logo.png alt=logo onerror=this.style.display='none'
+    Atlas Contingent
+  div
+  nav
+    a onclick=go('home') id=nav-home class=activeГлавнаяa
+    a onclick=go('about') id=nav-aboutО фракцииa
+    a onclick=go('rules') id=nav-rulesРегламентa
+    a onclick=go('apply') id=nav-applyЗаявкаa
+    a onclick=go('account') id=nav-accountАккаунтa
+    a onclick=go('roster') id=nav-rosterСоставa
+  nav
+header
+
+main
+  !-- ГЛАВНАЯ --
+  section id=home class=active
+    h1Atlas Contingenth1
+    pТактическое подразделение в зоне конфликта BRM5. Дисциплина. Верность. Точность.p
+    button class=btn onclick=go('apply')Вступитьbutton
+  section
+
+  !-- О ФРАКЦИИ --
+  section id=about
+    h1О фракцииh1
+    pAtlas Contingent — ЧВК, выполняющая спецоперации в условиях плотной застройки. Держим мир на своих плечах.p
+  section
+
+  !-- РЕГЛАМЕНТ --
+  section id=rules
+    h1Регламентh1
+    pКаждый боец обязан знать устав.p
+    a href=ССЫЛКА_НА_ТВОЙ_ГУГЛ_ДОК target=_blank class=doc-link📄 Открыть регламентa
+  section
+
+  !-- ЗАЯВКА --
+  section id=apply
+    h1Заявкаh1
+    pЗаполни формуp
+    div style=backgroundvar(--panel); padding2rem; text-aligncenter; border1px solid #333;
+      p style=colorvar(--muted)[Вставь iframe Google Forms]p
+    div
+  section
+
+  !-- АККАУНТ --
+  section id=account
+    !-- Регистрация --
+    div id=view-register class=box
+      h2Регистрацияh2
+      div id=reg-msg class=msgdiv
+      labelПозывнойlabel
+      input id=reg-callsign placeholder=Atlas-7
+      labelRoblox никlabel
+      input id=reg-roblox placeholder=@username
+      labelEmaillabel
+      input id=reg-email type=email placeholder=you@example.com
+      labelПароль (мин. 6 символов)label
+      input id=reg-pass type=password
+      button class=btn onclick=doRegister() style=width100%Зарегистрироватьсяbutton
+      p style=margin-top15px; text-aligncenter; font-size.9rem;
+        Уже есть аккаунт a style=colorvar(--accent); cursorpointer onclick=switchAuth('login')Войтиa
+      p
+    div
+
+    !-- Вход --
+    div id=view-login class=box hidden
+      h2Входh2
+      div id=login-msg class=msgdiv
+      labelEmaillabel
+      input id=login-email type=email
+      labelПарольlabel
+      input id=login-pass type=password
+      button class=btn onclick=doLogin() style=width100%Войтиbutton
+      p style=margin-top15px; text-aligncenter; font-size.9rem;
+        Нет аккаунта a style=colorvar(--accent); cursorpointer onclick=switchAuth('register')Регистрацияa
+      p
+    div
+
+    !-- Профиль --
+    div id=view-profile class=hidden
+      div class=box style=max-width600px
+        h2Мой профильh2
+        pbПозывнойb span id=p-callsignspanp
+        pbRobloxb span id=p-robloxspanp
+        pbЗваниеb span id=p-rankspanp
+        pbСтатусb span id=p-statusspanp
+        pbАдминb span id=p-adminspanp
+        br
+        button class=btn onclick=go('roster')Открыть составbutton
+        button class=btn alt onclick=doLogout()Выйтиbutton
+      div
+    div
+  section
+
+  !-- СОСТАВ --
+  section id=roster
+    h1Состав подразделенияh1
+    div id=roster-locked class=box
+      pДоступ только для авторизованных. Пожалуйста, войди в аккаунт.p
+      button class=btn onclick=go('account')Войти  Регистрацияbutton
+    div
+    div id=roster-content class=hidden
+      table
+        thead
+          trthЗваниеththПозывнойththRobloxththСтатусthth id=th-admin class=hiddenДействияthtr
+        thead
+        tbody id=roster-bodytbody
+      table
+    div
+  section
+main
+
+script type=module
+  import { createClient } from 'httpsesm.sh@supabasesupabase-js@2';
+
+   ⚠️ ВСТАВЬ СВОИ ДАННЫЕ СЮДА (МЕЖДУ КАВЫЧКАМИ) ⚠️
+  const SUPABASE_URL = 'https://rdvjxhbvoldalwdaxpha.supabase.co';       
+  const SUPABASE_KEY = 'sb_publishable_7VrMaknstxow1SHoYOj2rQ_Ck3mqgrI';  
+
+  const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  const RANKS = ['Rank I','Rank II','Rank III','Rank IV','Rank IV'];
+  const STATUSES = ['Активен','В отпуске','Отстранён'];
+  let currentUser = null;
+  let currentProfile = null;
+
+  window.go = function(id) {
+    document.querySelectorAll('main section').forEach(s = s.classList.remove('active'));
+    document.querySelectorAll('nav a').forEach(a = a.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    const nav = document.getElementById('nav-'+id);
+    if (nav) nav.classList.add('active');
+    if (id === 'roster') loadRoster();
+    if (id === 'account') renderAccount();
+  };
+
+  function switchAuth(view) {
+    document.getElementById('view-register').classList.toggle('hidden', view !== 'register');
+    document.getElementById('view-login').classList.toggle('hidden', view !== 'login');
+  }
+  window.switchAuth = switchAuth;
+
+  function showMsg(elId, text, type='err') {
+    const el = document.getElementById(elId);
+    el.className = 'msg ' + type;
+    el.textContent = text;
+  }
+
+  window.doRegister = async function() {
+    const callsign = document.getElementById('reg-callsign').value.trim();
+    const roblox = document.getElementById('reg-roblox').value.trim();
+    const email = document.getElementById('reg-email').value.trim();
+    const pass = document.getElementById('reg-pass').value;
+
+    if (!callsign  !email  pass.length  6) {
+      return showMsg('reg-msg', 'Заполни все поля. Пароль минимум 6 символов.');
+    }
+
+    const { data, error } = await supabase.auth.signUp({
+      email, password pass,
+      options { data { callsign, roblox_nick roblox } }
+    });
+
+    if (error) return showMsg('reg-msg', error.message);
+
+    if (data.user) {
+      await supabase.from('profiles').update({ callsign, roblox_nick roblox }).eq('id', data.user.id);
+    }
+    showMsg('reg-msg', 'Аккаунт создан! Теперь войди.', 'ok');
+    setTimeout(() = switchAuth('login'), 1200);
+  };
+
+  window.doLogin = async function() {
+    const email = document.getElementById('login-email').value.trim();
+    const pass = document.getElementById('login-pass').value;
+    const { error } = await supabase.auth.signInWithPassword({ email, password pass });
+    if (error) return showMsg('login-msg', error.message);
+    showMsg('login-msg', 'Успешный вход!', 'ok');
+    setTimeout(() = go('account'), 500);
+  };
+
+  window.doLogout = async function() {
+    await supabase.auth.signOut();
+    currentUser = null; currentProfile = null;
+    go('home');
+  };
+
+  async function loadProfile(user) {
+    const { data, error } = await supabase.from('profiles').select('').eq('id', user.id).single();
+    if (error) { console.error(error); return null; }
+    return data;
+  }
+
+  async function renderAccount() {
+    document.getElementById('view-register').classList.add('hidden');
+    document.getElementById('view-login').classList.add('hidden');
+    document.getElementById('view-profile').classList.add('hidden');
+
+    if (!currentUser) {
+      switchAuth('login');
+      return;
+    }
+
+    currentProfile = await loadProfile(currentUser);
+    if (!currentProfile) { switchAuth('login'); return; }
+
+    document.getElementById('p-callsign').textContent = currentProfile.callsign;
+    document.getElementById('p-roblox').textContent = currentProfile.roblox_nick  '—';
+    document.getElementById('p-rank').textContent = currentProfile.rank;
+    document.getElementById('p-status').textContent = currentProfile.status;
+    document.getElementById('p-admin').textContent = currentProfile.is_admin  'Да'  'Нет';
+    document.getElementById('view-profile').classList.remove('hidden');
+  }
+
+  async function loadRoster() {
+    if (!currentUser) {
+      document.getElementById('roster-locked').classList.remove('hidden');
+      document.getElementById('roster-content').classList.add('hidden');
+      return;
+    }
+    const { data, error } = await supabase.from('profiles')
+      .select('').order('created_at', { ascending true });
+    if (error) { console.error(error); return; }
+
+    const isAdmin = currentProfile.is_admin;
+    document.getElementById('th-admin').classList.toggle('hidden', !isAdmin);
+
+    const tbody = document.getElementById('roster-body');
+    tbody.innerHTML = '';
+    data.forEach(p = {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        td${p.rank}td
+        td${p.callsign}td
+        td${p.roblox_nick  '—'}td
+        td${p.status}td
+        td class=${isAdmin  ''  'hidden'}td
+      `;
+      if (isAdmin) {
+        const td = tr.lastElementChild;
+        const rankSel = document.createElement('select');
+        RANKS.forEach(r = { const o = document.createElement('option'); o.value=o.textContent=r; if(r===p.rank)o.selected=true; rankSel.appendChild(o); });
+        const statSel = document.createElement('select');
+        STATUSES.forEach(s = { const o = document.createElement('option'); o.value=o.textContent=s; if(s===p.status)o.selected=true; statSel.appendChild(o); });
+        rankSel.onchange = () = updateField(p.id, 'rank', rankSel.value);
+        statSel.onchange = () = updateField(p.id, 'status', statSel.value);
+        td.appendChild(rankSel); td.appendChild(document.createTextNode(' ')); td.appendChild(statSel);
+      }
+      tbody.appendChild(tr);
+    });
+
+    document.getElementById('roster-locked').classList.add('hidden');
+    document.getElementById('roster-content').classList.remove('hidden');
+  }
+
+  async function updateField(id, field, value) {
+    const { error } = await supabase.from('profiles').update({ [field] value }).eq('id', id);
+    if (error) alert('Ошибка ' + error.message);
+  }
+
+  const { data { session } } = await supabase.auth.getSession();
+  currentUser = session.user  null;
+  if (currentUser) currentProfile = await loadProfile(currentUser);
+
+  supabase.auth.onAuthStateChange((_e, s) = {
+    currentUser = s.user  null;
+    if (currentUser) loadProfile(currentUser).then(p = currentProfile = p);
+    renderAccount();
+  });
+
+  renderAccount();
+script
+body
+html
